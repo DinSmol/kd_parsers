@@ -18,7 +18,7 @@ from selenium.webdriver.support.ui import Select, WebDriverWait
 
 user_id = 
 username = 
-password = 'pass'
+password = 
 
 button = 'BoschPrivacySettingsV2__button BoschPrivacySettingsV2__button--tertiary'
 
