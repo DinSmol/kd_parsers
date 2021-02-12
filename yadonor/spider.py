@@ -13,9 +13,7 @@ STATE_OK = 'Кровь имеется в достаточном количест
 
 
 class Item():
-    def __init__(self,
-                 name,
-                 status):
+    def __init__(self, name, status):
         self.name = name
         self.status = status
 
@@ -41,7 +39,6 @@ class ConSite():
     def get_content(self, url):
         self.page = requests.get(url)
         self.soup = BeautifulSoup(self.page.text, 'html.parser')
-        
         
         data = self.soup.find_all("script")[16]
         blocks = re.findall('balloon.*[\n].*[\n].*[\n].*.png', data.text)
