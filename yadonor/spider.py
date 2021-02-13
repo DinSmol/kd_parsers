@@ -6,18 +6,19 @@ import time
 import requests
 from bs4 import BeautifulSoup
 
-STATE_GOOD = 'Кровь имеется в достаточном количестве (ведётся заготовка донорской плазмы)' # lights_icon_3.png
-STATE_BAD = 'Крови недостаточно и необходимо пополнение' # lights_icon_1.png
-STATE_CRITICAL =  'Запас крови достиг критического минимума' # lights_icon_0.png
-STATE_OK = 'Кровь имеется в достаточном количестве' # lights_icon_2.png
+STATE_GOOD = 'Кровь имеется в достаточном количестве (ведётся заготовка донорской плазмы)' 	# lights_icon_3.png
+STATE_BAD = 'Крови недостаточно и необходимо пополнение' 									# lights_icon_1.png
+STATE_CRITICAL =  'Запас крови достиг критического минимума' 								# lights_icon_0.png
+STATE_OK = 'Кровь имеется в достаточном количестве' 										# lights_icon_2.png
+SCRIPT_NUMBER = 16
 
-
-class ConSite():
+class Spider():
     def __init__(self):
-        self.date_create = datetime.datetime.now().date()
+        self.date_create = datetime.datetime.now().date()	# can use for logging, if script will run by a schedule
         self.result = {}
 
     def convert_status(self, status):
+		'''Convert icon name (ex. lights_icon_2.png) to human-readable format'''
         if '0' in status:
             return STATE_CRITICAL
         elif '1' in status:
@@ -28,13 +29,13 @@ class ConSite():
             return STATE_GOOD
         return 'Unknown'
 
-    '''get data from site'''
+    '''get and parse data from site'''
     def get_content(self, url):
         self.page = requests.get(url)
         self.soup = BeautifulSoup(self.page.text, 'html.parser')
         self.result['data'] = []
         
-        data = self.soup.find_all("script")[16]
+        data = self.soup.find_all("script")[SCRIPT_NUMBER]
         blocks = re.findall('balloon.*[\n].*[\n].*[\n].*.png', data.text)
         for block in blocks:
             try:
@@ -49,6 +50,6 @@ class ConSite():
 
 
 url = 'https://yadonor.ru/donorstvo/gde-sdat/map-lights/'
-obj = ConSite()
+obj = Spider()
 obj.get_content(url)
 obj.display_data()
