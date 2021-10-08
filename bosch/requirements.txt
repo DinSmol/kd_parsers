@@ -30,7 +30,7 @@ pytesseract==0.3.4
 queuelib==1.5.0
 requests==2.24.0
 schedule==0.6.0
-Scrapy==2.2.1
+Scrapy==2.5.1
 selenium==3.141.0
 service-identity==18.1.0
 six==1.15.0
