@@ -1,4 +1,4 @@
-anticaptchaofficial==1.0.26
+anticaptchaofficial==1.0.59
 attrs==19.3.0
 Automat==20.2.0
 beautifulsoup4==4.9.1
